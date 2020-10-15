@@ -1,9 +1,9 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Header from './components/Header';
-import NavBar from './components/NavBar';
-import EPG from './components/EPG';
-import './index.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import Header from './components/Header'
+import NavBar from './components/NavBar'
+import EPG from './components/EPG'
+import './index.css'
 
 class App extends React.Component{
   render(){
@@ -11,7 +11,9 @@ class App extends React.Component{
       <>
         <Header />
         <NavBar />
-        <EPG />
+        <div className="container">
+          <EPG />
+        </div>
       </>
     )
   }

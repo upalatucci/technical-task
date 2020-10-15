@@ -1,5 +1,23 @@
 :root {
-  --primary: #202020
+  --primary: #202020;
+  --box-size: 80px;
+  --border-color: #333;
+  --color-primary: #f4f4f4;
+  --color-secondary: #969696;
+  --timeline-color-1: #181818;
+  --timeline-color-2: #3c3c3c;
+  --nav-height: 65px;
+  --header-height: 95px;
+  --hour-timeline-width: 300px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -7,7 +25,8 @@ body {
 }
 
 header {
-  padding: 1rem;
+  height: var(--header-height);
+  padding: 0 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,19 +41,28 @@ header img.nm-icon {
   height: 4rem;
 }
 
+.right-shadow {
+  -webkit-box-shadow: 4px 0px 6px 0px black;
+  -moz-box-shadow: 4px 0px 6px 0px black;
+  box-shadow: 4px 0px 6px 0px black;
+  z-index: 2;
+}
+
 nav {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   right: 0;
-  padding: 2rem;
+  height: var(--nav-height);
+  padding: 0 1rem;
   background-color: var(--primary);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  -webkit-box-shadow: 0 0 6px 2px var(--primary);
-  -moz-box-shadow: 0 0 6px 2px var(--primary);
-  box-shadow: 0 0 6px 2px var(--primary);
+  -webkit-box-shadow: 0 0 6px 2px black;
+  -moz-box-shadow: 0 0 6px 2px black;
+  box-shadow: 0 0 6px 2px black;
+  z-index: 1024;
 }
 
 nav img {
@@ -44,4 +72,129 @@ nav img {
 .container {
   background-color: var(--primary);
   height: 100%;
+  min-height: calc(100vh - 9rem);
+  position: relative;
+  color: var(--color-primary);
+}
+
+.box {
+  height: var(--box-size);
+  background-color: var(--primary);
+}
+
+.custom-box {
+  height: var(--box-size);
+  max-height: var(--box-size);
+  width: var(--box-size);
+  min-width: var(--box-size);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-box.favorite img {
+  height: 30px;
+  position: relative;
+  top: -4px;
+}
+
+.box.box-daytimeline {
+  width: 100%;
+  display: flex;
+  overflow: scroll;
+}
+
+.box-day {
+  padding: 0 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: var(--color-secondary);
+}
+
+.box-day.selected {
+  color: var(--color-primary);
+}
+
+.flex {
+  display: flex;
+}
+
+.border-top {
+  z-index: 2;
+  border-top: 2px solid var(--border-color);
+  position: relative;
+}
+
+.border-bottom {
+  border-bottom: 2px solid var(--border-color);
+}
+
+.box-channel {
+  width: var(--box-size);
+} 
+
+.box-channel img {
+  margin: 1rem;
+}
+
+.timeline-container {
+  height: calc(100vh - var(--nav-height) - var(--header-height) - var(--box-size));
+  overflow-y: scroll;
+  overflow-x: hidden;
+  display: flex;
+  flex-direction: row;
+}
+
+.timeline-channels {
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: black;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.timeline-channel {
+  display: flex;
+}
+
+.program-box {
+  padding: .5rem;
+}
+
+.program-box h3 {
+  font-size: 16px;
+  margin-top: 0;
+  margin-bottom: 4px;
+}
+
+.program-box p {
+  margin-top: 0;
+  font-size: 12px;
+}
+
+.program-box:nth-child(even) {
+  background-color: var(--timeline-color-1);
+}
+
+.program-box:nth-child(odd) {
+  background-color: var(--timeline-color-2);
+}
+
+.timeline-time {
+  display: flex;
+  height: calc(var(--box-size) / 2);
+  min-height: calc(var(--box-size) / 2);
+}
+
+.timeline-hour {
+  background-color: var(--primary);
+  position: relative;
+  left: 3px;
+  width: var(--hour-timeline-width);
+  min-width: var(--hour-timeline-width);
 }
