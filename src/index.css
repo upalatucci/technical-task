@@ -1,7 +1,8 @@
 :root {
   --primary: #202020;
   --box-size: 80px;
-  --border-color: #333;
+  --border-color: #999;
+  --border-color-darker: #333;
   --color-primary: #f4f4f4;
   --color-secondary: #969696;
   --timeline-color-1: #181818;
@@ -9,7 +10,8 @@
   --nav-height: 65px;
   --header-height: 95px;
   --hour-timeline-width: 300px;
-  font-family: 'Source Sans Pro', sans-serif;
+  --now-timeline-color: #e2a43b;
+  font-family: "Source Sans Pro", sans-serif;
 }
 
 * {
@@ -22,6 +24,47 @@ html {
 
 body {
   margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-button {
+  width: 0px;
+  height: 0px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-secondary);
+  border: 0px none var(--color-secondary);
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-secondary);
+}
+::-webkit-scrollbar-thumb:active {
+  background: #000000;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--primary);
+  border: 0px none var(--color-secondary);
+  border-radius: 50px;
+}
+
+::-webkit-scrollbar-track:hover {
+  background: var(--primary);
+}
+
+::-webkit-scrollbar-track:active {
+  background: var(--primary);
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
 }
 
 header {
@@ -46,6 +89,7 @@ header img.nm-icon {
   -moz-box-shadow: 4px 0px 6px 0px black;
   box-shadow: 4px 0px 6px 0px black;
   z-index: 2;
+  position: relative;
 }
 
 nav {
@@ -101,7 +145,8 @@ nav img {
 .box.box-daytimeline {
   width: 100%;
   display: flex;
-  overflow: scroll;
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .box-day {
@@ -123,7 +168,7 @@ nav img {
 
 .border-top {
   z-index: 2;
-  border-top: 2px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
   position: relative;
 }
 
@@ -133,10 +178,11 @@ nav img {
 
 .box-channel {
   width: var(--box-size);
-} 
+}
 
 .box-channel img {
-  margin: 1rem;
+  padding: 1rem;
+  width: 100%;
 }
 
 .timeline-container {
@@ -145,6 +191,7 @@ nav img {
   overflow-x: hidden;
   display: flex;
   flex-direction: row;
+  position: relative;
 }
 
 .timeline-channels {
@@ -156,14 +203,16 @@ nav img {
   background-color: black;
   overflow-x: scroll;
   overflow-y: hidden;
+  position: relative;
 }
 
 .timeline-channel {
   display: flex;
+  border-top: 1px solid var(--border-color-darker);
 }
 
 .program-box {
-  padding: .5rem;
+  padding: 0.5rem;
 }
 
 .program-box h3 {
@@ -177,11 +226,11 @@ nav img {
   font-size: 12px;
 }
 
-.program-box:nth-child(even) {
+.program-box {
   background-color: var(--timeline-color-1);
 }
 
-.program-box:nth-child(odd) {
+.program-box.live {
   background-color: var(--timeline-color-2);
 }
 
@@ -194,7 +243,148 @@ nav img {
 .timeline-hour {
   background-color: var(--primary);
   position: relative;
-  left: 3px;
+  left: -18px;
   width: var(--hour-timeline-width);
   min-width: var(--hour-timeline-width);
+}
+
+.hour-line {
+  width: 1px;
+  height: 12px;
+  background-color: var(--color-primary);
+  position: absolute;
+  bottom: 0;
+  left: 18px;
+}
+
+.now-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background-color: var(--now-timeline-color);
+  width: 1px;
+  z-index: 4;
+}
+
+.now-line-notch {
+  width: 5px;
+  height: calc(var(--box-size) / 2);
+  background-color: var(--now-timeline-color);
+  border-radius: 10px;
+  position: relative;
+  left: -2px;
+}
+
+.now-button {
+  position: fixed;
+  bottom: calc(15px + var(--nav-height));
+  right: 10px;
+  z-index: 12;
+  background-color: var(--now-timeline-color);
+  border-radius: 8px;
+  border: 1px solid var(--now-timeline-color);
+  color: white;
+  padding: 0.5rem 0.75rem;
+  font-weight: bold;
+  font-size: 20px;
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.spinner {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.75);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2048;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.spinner .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: white;
+  margin: .75rem;
+  animation: scale-up-and-down 1s ease-in-out infinite;
+}
+
+.spinner .dot:nth-child(2) {
+  animation-delay: .2s;
+}
+
+.spinner .dot:nth-child(3) {
+  animation-delay: .4s;
+}
+
+.spinner .dot:nth-child(4) {
+  animation-delay: .6s;
+}
+
+
+@-webkit-keyframes scale-up-and-down {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+@keyframes scale-up-and-down {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+  50% {
+    -webkit-transform: scale(2);
+    transform: scale(2);
+  }
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+.spinner .loading {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 3px solid var(--border-color);
+  border-top: 3px solid white;
+  animation: rotate 1s ease-in-out infinite;
+}
+
+@-webkit-keyframes rotate {
+  0% {
+    -webkit-transform: rotateZ(0);
+    transform: rotateZ(0);
+  }
+  100% {
+    -webkit-transform: rotateZ(360deg);
+    transform: rotateZ(360deg);
+  }
+}
+@keyframes rotate {
+  0% {
+    -webkit-transform: rotateZ(0);
+    transform: rotateZ(0);
+  }
+  100% {
+    -webkit-transform: rotateZ(360deg);
+    transform: rotateZ(360deg);
+  }
 }

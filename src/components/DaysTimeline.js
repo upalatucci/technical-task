@@ -1,7 +1,8 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { format, subDays, addDays } from 'date-fns'
 import { DATE_FORMAT } from '../constants'
 import DayOnTimeline from './DayOnTimeline'
+import { scrollTo } from '../utils'
 
 export default () => {
   const ref = useRef(null)
@@ -9,9 +10,14 @@ export default () => {
   const startDay = subDays(new Date(), 7)
   const days = new Array(14).fill(0).map((_, i) => addDays(startDay, i))
 
-  if (ref && ref.current) {
-    ref.current.scrollIntoView()
-  }
+  useEffect(() => {
+
+    setTimeout(() => {
+      if (ref && ref.current) {
+        ref.current.scrollIntoView()
+      }
+    }, 500)
+  }, [])
 
   return (
     <div className="box box-daytimeline">

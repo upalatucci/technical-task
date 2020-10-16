@@ -11,9 +11,9 @@ class App extends React.Component{
       <>
         <Header />
         <NavBar />
-        <div className="container">
+        <main className="container">
           <EPG />
-        </div>
+        </main>
       </>
     )
   }
