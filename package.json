@@ -8,8 +8,8 @@
   },
   "scripts": {
     "start:mock-api": "./node_modules/.bin/osprey-mock-service -f ./node_modules/nm-mock-api/demo.raml -p 1337 --cors",
-    "start": "node ./node_modules/nm-mock-api/scripts/updateEpg.js && yarn start:mock-api",
-    "dev": "concurrently \"webpack serve\" \"yarn start\"",
+    "start": "node ./node_modules/nm-mock-api/scripts/updateEpg.js && npm run start:mock-api",
+    "dev": "concurrently \"webpack serve\" \"npm start\"",
     "build": "webpack --mode production"
   },
   "author": "Dylan Thomson",
