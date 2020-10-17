@@ -1,18 +1,35 @@
-import React, { useRef, useEffect } from 'react'
-import { format } from 'date-fns'
+import React from 'react';
+import PropTypes from 'prop-types';
+import { format } from 'date-fns';
 
-export default React.forwardRef(({setSelectedDay, selected, day, id}, ref) => {
-  let className = "box box-day"
-  if (selected)
-    className += " selected"
+const DayOnTimeline = React.forwardRef(({
+  setSelectedDay, selected, day, id,
+}, ref) => {
+  let className = 'box box-day';
+  if (selected) className += ' selected';
 
-  const selectDay = e => {
-    setSelectedDay(e.currentTarget.id)
-  }
+  const selectDay = (e) => {
+    setSelectedDay(e.currentTarget.id);
+  };
 
   return (
-    <div ref={ref} className={className} id={id} onClick={selectDay}>
+    <button
+      type="button"
+      ref={ref}
+      className={className}
+      id={id}
+      onClick={selectDay}
+    >
       {format(day, 'EEE dd.LL.')}
-    </div>
-  )
-})
+    </button>
+  );
+});
+
+DayOnTimeline.propTypes = {
+  setSelectedDay: PropTypes.func.isRequired,
+  selected: PropTypes.bool.isRequired,
+  day: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+};
+
+export default DayOnTimeline;

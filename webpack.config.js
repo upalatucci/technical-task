@@ -1,24 +1,24 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { DefinePlugin } = require('webpack')
-const dotenv = require('dotenv').config()
+const { DefinePlugin } = require('webpack');
+const dotenv = require('dotenv').config();
 
 module.exports = {
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'index_bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     rules: [
-      { 
-        test: /\.(js)$/, 
-        exclude: /node_modules/, 
-        use: 'babel-loader' 
+      {
+        test: /\.(js)$/,
+        exclude: /node_modules/,
+        use: 'babel-loader',
       },
-      { 
-        test: /\.css$/, 
-        use: ['style-loader', 'css-loader'] 
+      {
+        test: /\.css$/,
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.(png|jpe?g|gif)$/i,
@@ -28,16 +28,21 @@ module.exports = {
           },
         ],
       },
-    ]
+    ],
   },
-  mode: 'development',
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
+  mode: process.env.NODE_ENV === 'development' ? 'development' : 'production',
   plugins: [
     new HtmlWebpackPlugin({
-      template: 'src/index.html'
+      template: 'src/index.html',
     }),
     new DefinePlugin({
-      "process.env": JSON.stringify(dotenv.parsed)
-  })
-  ]
+      'process.env': JSON.stringify(dotenv.parsed),
+    }),
+  ],
 
-}
+};

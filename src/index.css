@@ -149,13 +149,14 @@ nav img {
   overflow-y: hidden;
 }
 
-.box-day {
+button.box-day {
   padding: 0 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
   color: var(--color-secondary);
+  border: none;
 }
 
 .box-day.selected {
