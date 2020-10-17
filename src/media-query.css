@@ -1,0 +1,59 @@
+@media (min-width: 768px) {
+  nav span {
+    display: inline;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --nav-height: 0px;
+    --search-bar-height: 2rem;
+    --box-size: 100px;
+  }
+
+  .container {
+    min-height: 100vh;
+  }
+
+  header {
+    display: grid;
+    grid-template-areas: "logo navbar profile";
+    grid-template-columns: 50% 45% 5%;
+  }
+  
+  header > img:nth-child(1) {
+    grid-area: profile;
+  }
+
+  header > img:nth-child(2) {
+    grid-area: logo;
+  }
+
+  header > img:nth-child(3) {
+    grid-area: navbar;
+  }
+
+  header .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  nav {
+    position: static;
+    background-color: transparent;
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+
+  nav img {
+    display: none;
+  }
+
+
+  nav span {
+    margin: 0 1rem;
+    font-size: 1.25rem;
+  }
+}
